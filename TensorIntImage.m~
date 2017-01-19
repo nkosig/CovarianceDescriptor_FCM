@@ -19,13 +19,13 @@ function [ pvector ] = TensorIntImage( featureimage )
 
 featureimage = permute(featureimage,[3 2 1]); % shift dimensions for cumsum (d x W x H)
 
-%[d,w,h] = size(featureimage);
+[d,w,h] = size(featureimage);
 
-%Ptemp = zeros(d,w,h);
+Ptemp = zeros(d,w,h);
 
-pvector = cumsum(cumsum(featureimage,3),2);
+Ptemp(:,2:end,2:end) = cumsum(cumsum(featureimage,3),2);
 
-%pvector = Ptemp(:,2:end,2:end);
+pvector = Ptemp(:,2:end,2:end);
 
 pvector = permute(pvector,[3 2 1]); % Permute back H x W x d
 

@@ -24,23 +24,23 @@ function [ featureimage ] = FeatureImage( RGBimage )
     I = rgb2gray(RGBimage);         % Convert to grayscale (intensity) image 
     I = im2double(I);               % Convert intensity image I to double
 
-    [h,w,~] = size(RGB);            % Image dimensions
+    [h,w,~] = size(RGBimage);            % Image dimensions
 
-    featureimage = zeros(h,w,9);               % Feature image template  (H x W x d matrix)
+    featureimage = zeros(h,w,9);         % Feature image template  (H x W x d matrix)
 
-    for i=1:h
-        for j=1:w
-            featureimage(i,:,1) = i*ones(1,w);         % Pixel x location
-            featureimage(:,j,2) = j*ones(h,1);         % Pixel y location
+    for y=1:h
+        for x=1:w
+            featureimage(y,x,1) = x;         % Pixel x location
+            featureimage(y,x,2) = y;         % Pixel y location
         end
     end
 
-    featureimage(:,:,3:5) = im2double(RGB);            % double RGB pixel values
+    featureimage(:,:,3:5) = im2double(RGBimage);       % double RGB pixel values
 
-    xdev1 = [-1 0 1]';      % first derivate w.r.t x calculation kernel (dx)
+    xdev1 = [1 0 -1; 2 0 -2; 1 0 -1];      % first derivate w.r.t x calculation kernel (dx)
     ydev1 = xdev1';         % kernel transpose for dy    
 
-    xdev2 = [-1 2 -1]';     % second derivate w.r.t x calculation kernel (dx^2)
+    xdev2 = [0 1 0; 1 -4 1; 0 1 0];     % second derivate w.r.t x calculation kernel (dx^2)
     ydev2 = xdev2';         % kernel transpose for dy^2
 
     featureimage(:,:,6) = abs(conv2(I,xdev1,'same'));    % Absolute of first derivative w.r.t x |dI/dx|
@@ -48,6 +48,6 @@ function [ featureimage ] = FeatureImage( RGBimage )
     featureimage(:,:,8) = abs(conv2(I,xdev2,'same'));    % Absolute of second derivative w.r.t x |d^2I/dx^2|
     featureimage(:,:,9) = abs(conv2(I,ydev2,'same'));    % Absolute of second derivative w.r.t y |d^2I/dy^2|
 
-    featureimage = permute(featureimage,[2 1 3]); % permute F from H x W x d to W x H x d
+    %featureimage = permute(featureimage,[2 1 3]); % permute F from H x W x d to W x H x d
 end
 
