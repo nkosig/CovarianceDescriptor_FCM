@@ -7,7 +7,7 @@ function [ output_args ] = fuzzy_cm( input_args )
 % This program can be generalised to get "n" segments from  an image
 % by means of slightly modifying the given code.
 clear all;clc;
-in=input('enter an image to segment','s');
+in=input('enter an image to segment\n','s');
 IM=imread(in);
 IM=double(IM);
 figure(1)
