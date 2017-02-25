@@ -30,19 +30,19 @@ for t = 1:max_iter
     
     Jm(t) = sum(sum(Uexp.*(dist.^2)));
     
-    U_new = zeros(n_clusters,n_data);
+    %U_new = zeros(n_clusters,n_data);
     dist_temp = dist.^(2/(m-1));
     
     for i = 1:n_clusters
-        U_new(i,:) = 1./(sum((repmat(dist_temp(i,:),2,1)).*dist_temp));
+        U(i,:) = 1./(sum((repmat(dist_temp(i,:),2,1))./dist_temp));
     end
     
     if t>1
         if abs(Jm(t) - Jm(t-1)) < e
             break;
-        end
-        U = U_new;
+        end     
     end
+    %U = U_new;
 end
 
 Jm(t+1:max_iter) = [];
