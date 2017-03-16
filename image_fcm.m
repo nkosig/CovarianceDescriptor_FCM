@@ -1,21 +1,31 @@
-function [ output_args ] = image_fcm( image, fmt )
+function [ fcm_image ] = image_fcm( image, fmt )
 %UNTITLED6 Summary of this function goes here
 %   Detailed explanation goes here
 image = imread(image,fmt);
 
-if (size(image,2)==3)
-    image = rgb2gray(image);
+if (size(image,3)==3)
+    im = im2double(rgb2gray(image));
 end
 
-data = reshape(image,[],1);
+data = reshape(im,[],1);
 
-[obj_fcn, U, c] = fuzzy_cm(data);
+[c1, U1, Jm1] = fcm(data,2);
+[Jm2, U2, c2] = fuzzy_cm(data);
 
-maxU = max(U);
-% Find the data points with highest grade of membership in cluster 1
-index1 = find(U(1,:) == maxU);
-% Find the data points with highest grade of membership in cluster 2
-index2 = find(U(2,:) == maxU);
+[~,u_index1] = max(U1);
+[~,u_index2] = max(U2);
+
+level1 = min(max(data(u_index1==1)),max(data(u_index1==2)))
+level2 = min(max(data(u_index2==1)),max(data(u_index2==2)))
+
+fcm_image = im2bw(im,level1);
+
+subplot(1,2,1);
+imshow(image);
+subplot(1,2,2);
+imshow(fcm_image);
+
+
 
 
 
