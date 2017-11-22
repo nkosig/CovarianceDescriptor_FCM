@@ -1,7 +1,7 @@
-function [ featureimage ] = FeatureImage( RGBimage )
+function [ featureimage ] = feature_image( RGBimage )
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-%  Filename: FeatureImage.m
+%  Filename: feature_image.m
 %
 %  Description: This function calculates the feature image from the RGB image.
 %               This function calculates the 9 features for each pixel in the 
@@ -10,15 +10,14 @@ function [ featureimage ] = FeatureImage( RGBimage )
 %
 %  F(x,y) = [x y R(x,y) G(x,y) B(x,y) |dI/dx| |dI/dy| |d^2I/dx^2| |d^2I/dy^2|]
 %
-%  featureimage - Output feature image (W x H x d)
-%  RGBimage - 3 dimensional RGB color image (W x H x 3)
+%  featureimage - Output feature image (H x W x d)
+%  RGBimage - 3 dimensional RGB color image (H x W x 3)
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%  Author
-%  Nkosikhona Gumede
+%  Author: Nkosikhona Gumede
 %  University of KwaZulu Natal
 %  208504751@stu.ukzn.ac.za
-%  Nov 2016
+%  Aug 2017
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     I = rgb2gray(RGBimage);         % Convert to grayscale (intensity) image 
@@ -28,10 +27,10 @@ function [ featureimage ] = FeatureImage( RGBimage )
 
     featureimage = zeros(h,w,9);         % Feature image template  (H x W x d matrix)
 
-    for y=1:h
-        for x=1:w
-            featureimage(y,x,1) = x;         % Pixel x location
-            featureimage(y,x,2) = y;         % Pixel y location
+    for x=1:w
+        for y=1:h
+            featureimage(y,x,1) = x;         % Pixel x (w) location
+            featureimage(y,x,2) = y;         % Pixel y (h) location
         end
     end
 
@@ -48,6 +47,6 @@ function [ featureimage ] = FeatureImage( RGBimage )
     featureimage(:,:,8) = abs(conv2(I,xdev2,'same'));    % Absolute of second derivative w.r.t x |d^2I/dx^2|
     featureimage(:,:,9) = abs(conv2(I,ydev2,'same'));    % Absolute of second derivative w.r.t y |d^2I/dy^2|
 
-    %featureimage = permute(featureimage,[2 1 3]); % permute F from H x W x d to W x H x d
+    featureimage = permute(featureimage,[2 1 3]); % permute F from H x W x d to W x H x d
 end
 

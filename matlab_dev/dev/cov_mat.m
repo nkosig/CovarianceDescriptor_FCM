@@ -1,4 +1,4 @@
-function [ covmatrix ] = Covariance( P,Q,xp,yp,xpp,ypp )
+function [ covmatrix ] = cov_mat( P,Q,xp,yp,xpp,ypp )
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 %  Filename: RCovariance.m
@@ -19,10 +19,10 @@ function [ covmatrix ] = Covariance( P,Q,xp,yp,xpp,ypp )
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Rp = squeeze(P(ypp,xpp,:) + P(yp,xp,:) - P(ypp,xp,:) - P(yp,xpp,:));   % Second term
-Rq = squeeze(Q(ypp,xpp,:,:) + Q(yp,xp,:,:) - Q(ypp,xp,:,:) - Q(yp,xpp,:,:)); % First term
+Rp = squeeze(P(xpp,ypp,:) + P(xp,yp,:) - P(xpp,yp,:) - P(xp,ypp,:));   % Second term
+Rq = squeeze(Q(xpp,ypp,:,:) + Q(xp,yp,:,:) - Q(xpp,yp,:,:) - Q(xp,ypp,:,:)); % First term
 
-n = (ypp - yp)*(xpp - xp);
+n = (xpp - xp)*(ypp - yp);
 
 covmatrix = 1/(n - 1) * (Rq - (1/n) * (Rp*Rp')); %Covariance matrix - equation 12 (d x d)
 
