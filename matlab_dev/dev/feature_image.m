@@ -27,10 +27,10 @@ function [ featureimage ] = feature_image( RGBimage )
 
     featureimage = zeros(h,w,9);         % Feature image template  (H x W x d matrix)
 
-    for y=1:h
-        for x=1:w
-            featureimage(y,x,1) = x;         % Pixel x location
-            featureimage(y,x,2) = y;         % Pixel y location
+    for x=1:w
+        for y=1:h
+            featureimage(y,x,1) = x;         % Pixel x (w) location
+            featureimage(y,x,2) = y;         % Pixel y (h) location
         end
     end
 

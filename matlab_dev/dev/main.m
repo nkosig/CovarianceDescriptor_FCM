@@ -1,8 +1,6 @@
 disp('Covariance Descriptor and Fuzzy C-Means');
 
-addpath('../..');
-
-image = 'images/icon_image.png';
+image = '../../images/icon_image.png';
 % image = input('Enter image URL: ','s');
 % while(exist(image,'file') ~= 2)
 %     image = input('Invalid image URL, remember to include directory: ','s');
