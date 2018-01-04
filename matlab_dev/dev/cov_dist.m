@@ -22,7 +22,7 @@ d = 0;
 eps = 1e-6; 
 
 try
-  [~,D] = eig(C1 + eps,C2 + eps); %Calculating the generalised eigenvalues
+  [~,D] = eig(C1 + eps,C2 + eps,'qz'); %Calculating the generalised eigenvalues
 catch
   C = C2;
   disp(C2);

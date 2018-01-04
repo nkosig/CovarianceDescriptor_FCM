@@ -35,6 +35,7 @@ function [ featureimage ] = feature_image( RGBimage )
     end
 
     featureimage(:,:,3:5) = im2double(RGBimage);       % double RGB pixel values
+    %featureimage(:,:,3:5) = RGBimage;                   %% NK: fixed positive definite covariance issue.
 
     xdev1 = [1 0 -1; 2 0 -2; 1 0 -1];      % first derivate w.r.t x calculation kernel (dx)
     ydev1 = xdev1';         % kernel transpose for dy    
@@ -49,4 +50,3 @@ function [ featureimage ] = feature_image( RGBimage )
 
     featureimage = permute(featureimage,[2 1 3]); % permute F from H x W x d to W x H x d
 end
-

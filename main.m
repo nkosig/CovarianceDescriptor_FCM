@@ -1,6 +1,9 @@
 disp('Covariance Descriptor and Fuzzy C-Means');
 
-image = '../../images/icon_image.png';
+addpath(genpath('/Users/nkosig/Documents/MATLAB/CovarianceDescriptor_FCM'));
+
+image = 'JoarVaage.jpg';
+
 % image = input('Enter image URL: ','s');
 % while(exist(image,'file') ~= 2)
 %     image = input('Invalid image URL, remember to include directory: ','s');
@@ -11,10 +14,10 @@ RGBimage = imread(image);
 
 % Reference Image Computing
 
-FeatureImageR = feature_image(RGBimage);    % W x H x d feature image
+FeatureImage = feature_image(RGBimage);    % W x H x d feature image
 
-Pr = tensor_int_im(FeatureImageR);    % W x H x d
-Qr = tensor_2ord_int_im(FeatureImageR);   % W x H x d x d   
+Pr = tensor_int_im(FeatureImage);    % W x H x d
+Qr = tensor_2ord_int_im(FeatureImage);   % W x H x d x d   
 
 Cr = cov_mat(Pr, Qr,1,1,w,h);
 
@@ -28,7 +31,4 @@ end
 
 % Distance check
 
-dist = cov_dist(Cr,Cr);
-
-
-    
+dist = cov_dist(Cr,Cr);   
