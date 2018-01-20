@@ -18,11 +18,13 @@ function d = cov_dist(C1,C2)
 
 global C
 d = 0;
+[~,n] = size(C1);
 
 eps = 1e-6; 
+I = eye(n);
 
 try
-  [~,D] = eig(C1 + eps,C2 + eps,'qz'); %Calculating the generalised eigenvalues
+  [~,D] = eig(C1 + I*eps,C2 + I*eps); %Calculating the generalised eigenvalues
 catch
   C = C2;
   disp(C2);
